@@ -90,11 +90,13 @@ class ResumeDetailPage extends StatelessWidget {
     final experienceBox = Hive.box('experiences');
     final List<String> experiences = [];
 
-    for (int i = 0; i < experienceBox.length; i++) {
-      final company = experienceBox.get('company_$i', defaultValue: '');
-      final duration = experienceBox.get('duration_$i', defaultValue: '');
-      final position = experienceBox.get('position_$i', defaultValue: '');
-      experiences.add('$position at $company ($duration)');
+    for (var key in experienceBox.keys) {
+      if (key.startsWith(name)) {
+        final company = experienceBox.get('$key.company', defaultValue: '');
+        final duration = experienceBox.get('$key.duration', defaultValue: '');
+        final position = experienceBox.get('$key.position', defaultValue: '');
+        experiences.add('$position at $company ($duration)');
+      }
     }
 
     return Column(
@@ -107,12 +109,14 @@ class ResumeDetailPage extends StatelessWidget {
     final educationBox = Hive.box('educations');
     final List<String> educations = [];
 
-    for (int i = 0; i < educationBox.length; i++) {
-      final college = educationBox.get('college_$i', defaultValue: '');
-      final degree = educationBox.get('degree_$i', defaultValue: '');
-      final graduationYear =
-          educationBox.get('graduation_year_$i', defaultValue: '');
-      educations.add('$degree in $college ($graduationYear)');
+    for (var key in educationBox.keys) {
+      if (key.startsWith(name)) {
+        final college = educationBox.get('$key.college', defaultValue: '');
+        final degree = educationBox.get('$key.degree', defaultValue: '');
+        final graduationYear =
+            educationBox.get('$key.graduation_year', defaultValue: '');
+        educations.add('$degree in $college ($graduationYear)');
+      }
     }
 
     return Column(

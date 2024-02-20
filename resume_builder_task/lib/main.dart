@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:resume_builder_task/view/resume_builder.dart';
-import 'package:resume_builder_task/view/resume_section.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +11,6 @@ void main() async {
   await Hive.openBox('projects');
   await Hive.openBox('skills');
   await Hive.openBox('personal_info');
-  print('Boxes opened successfully');
 
   runApp(const MyApp());
 }
