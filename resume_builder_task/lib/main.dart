@@ -11,8 +11,8 @@ void main() async {
   await Hive.openBox('educations');
   await Hive.openBox('projects');
   await Hive.openBox('skills');
-  await Hive.openBox('personal_info'); // Add this line
-  print('Boxes opened successfully'); // Add this line
+  await Hive.openBox('personal_info');
+  print('Boxes opened successfully');
 
   runApp(const MyApp());
 }
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ResumeBuilder(),
+      home: const ResumeBuilder(),
     );
   }
 }
