@@ -3,34 +3,37 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:hive/hive.dart';
+import 'package:resume_builder_task/model/education_model.dart';
+import 'package:resume_builder_task/model/experience_model.dart';
+import 'package:resume_builder_task/widgets/textform_widget.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await Hive.openBox('experiences');
-  await Hive.openBox('educations');
-  await Hive.openBox('projects');
-  await Hive.openBox('skills');
-  await Hive.openBox('personal_info'); // Add this line
-  print('Boxes opened successfully'); // Add this line
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Hive.initFlutter();
+//   await Hive.openBox('experiences');
+//   await Hive.openBox('educations');
+//   await Hive.openBox('projects');
+//   await Hive.openBox('skills');
+//   await Hive.openBox('personal_info'); // Add this line
+//   print('Boxes opened successfully'); // Add this line
 
-  runApp(const MyApp());
-}
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+// class MyApp extends StatelessWidget {
+//   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Resume Builder',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ResumeAddPage(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Resume Builder',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: const ResumeAddPage(),
+//     );
+//   }
+// }
 
 class ResumeAddPage extends StatefulWidget {
   const ResumeAddPage({Key? key}) : super(key: key);
@@ -63,7 +66,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
 
   @override
   void dispose() {
-    // Clean up the controllers when the widget is disposed
     fullNameController.dispose();
     emailController.dispose();
     phoneNumberController.dispose();
@@ -220,7 +222,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                 shrinkWrap: true,
                 itemCount: experiences.length + 1,
                 itemBuilder: (context, index) {
-                  // Create controllers for this experience item
                   if (index < experiences.length) {
                     if (experienceCompanyControllers.length <= index) {
                       experienceCompanyControllers.add(TextEditingController());
@@ -289,7 +290,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                         onPressed: () {
                           setState(() {
                             experiences.removeAt(index);
-                            // Clean up the controllers when removing an experience
                             experienceCompanyControllers[index].dispose();
                             experienceDurationControllers[index].dispose();
                             experiencePositionControllers[index].dispose();
@@ -317,7 +317,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                 shrinkWrap: true,
                 itemCount: educations.length + 1,
                 itemBuilder: (context, index) {
-                  // Create controllers for this education item
                   if (index < educations.length) {
                     if (educationCollegeControllers.length <= index) {
                       educationCollegeControllers.add(TextEditingController());
@@ -386,7 +385,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                         onPressed: () {
                           setState(() {
                             educations.removeAt(index);
-                            // Clean up the controllers when removing an education
                             educationCollegeControllers[index].dispose();
                             educationDegreeControllers[index].dispose();
                             educationGraduationYearControllers[index].dispose();
@@ -414,7 +412,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                 shrinkWrap: true,
                 itemCount: projects.length + 1,
                 itemBuilder: (context, index) {
-                  // Create controllers for this project item
                   if (index < projects.length) {
                     if (projectControllers.length <= index) {
                       projectControllers.add(TextEditingController());
@@ -449,7 +446,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                         onPressed: () {
                           setState(() {
                             projects.removeAt(index);
-                            // Clean up the controllers when removing a project
                             projectControllers[index].dispose();
                             projectControllers.removeAt(index);
                           });
@@ -468,12 +464,10 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               const Divider(),
-              // Skill section
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: skills.length + 1,
                 itemBuilder: (context, index) {
-                  // Create controllers for this skill item
                   if (index < skills.length) {
                     if (skillControllers.length <= index) {
                       skillControllers.add(TextEditingController());
@@ -508,7 +502,6 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
                         onPressed: () {
                           setState(() {
                             skills.removeAt(index);
-                            // Clean up the controllers when removing a skill
                             skillControllers[index].dispose();
                             skillControllers.removeAt(index);
                           });
@@ -547,41 +540,4 @@ class _ResumeAddPageState extends State<ResumeAddPage> {
       ),
     );
   }
-}
-
-class TextFormWidget extends StatelessWidget {
-  final String hinttext;
-  final TextEditingController? controller;
-  final ValueChanged<String>? onChanged;
-
-  const TextFormWidget({
-    Key? key,
-    required this.hinttext,
-    this.controller,
-    this.onChanged,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        hintText: hinttext,
-        border: const OutlineInputBorder(),
-      ),
-    );
-  }
-}
-
-class Experience {
-  String? company;
-  String? duration;
-  String? position;
-}
-
-class Education {
-  String? college;
-  String? degree;
-  String? graduationYear;
 }

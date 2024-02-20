@@ -2,28 +2,24 @@ import 'package:flutter/material.dart';
 
 class TextFormWidget extends StatelessWidget {
   final String hinttext;
+  final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+
   const TextFormWidget({
-    super.key,
+    Key? key,
     required this.hinttext,
+    this.controller,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hinttext,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
-          borderSide: const BorderSide(
-            color: Colors.blue,
-            width: 2.0,
-          ),
-        ),
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+        border: const OutlineInputBorder(),
       ),
     );
   }
